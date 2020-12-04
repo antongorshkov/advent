@@ -1,11 +1,5 @@
 import re
 
-lines = []
-with open('day4.input') as inputFile:
-    res = inputFile.read()
-
-passportsRaw = res.split("\n\n")
-
 requiredFields = {'byr','iyr','eyr','hgt','hcl','ecl','pid'}
 def validateByr(x): return int(x) in range(1920,2003)
 def validateIyr(x): return int(x) in range(2010,2021)
@@ -15,9 +9,9 @@ def validatePid(x): return x.isdigit() and len(x) == 9
 def validateHcl(x): return re.match(r"#[0-9a-f]{6}", x) is not None
 def validateHgt(x): return (("cm" in x and (150 <= int(x.replace("cm", "")) <= 193)) or ("in" in x and (59 <= int(x.replace("in", "")) <= 76)))
 
+lines = []
+passportsRaw = open("day4.input", "r").read().split("\n\n")
 
-
-passports = []
 isValidCnt = 0
 for passport in passportsRaw:
     fields = passport.split()
@@ -36,6 +30,5 @@ for passport in passportsRaw:
         and validatePid(p['pid'])
     ):
         isValidCnt += 1
-    passports.append(p)
 
 print isValidCnt

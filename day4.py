@@ -1,3 +1,5 @@
+import re
+
 lines = []
 with open('day4.input') as inputFile:
     res = inputFile.read()
@@ -10,22 +12,9 @@ def validateIyr(x): return int(x) in range(2010,2021)
 def validateEyr(x): return int(x) in range(2020,2031)
 def validateEcl(x): return x in {'amb','blu','brn','gry','grn','hzl','oth'}
 def validatePid(x): return x.isdigit() and len(x) == 9
+def validateHcl(x): return re.match(r"#[0-9a-f]{6}", x) is not None
+def validateHgt(x): return (("cm" in x and (150 <= int(x.replace("cm", "")) <= 193)) or ("in" in x and (59 <= int(x.replace("in", "")) <= 76)))
 
-def validateHgt(x):
-    suffix = x[-2:]
-    prefix = x[0:len(x)-2:]
-    if suffix not in {'cm','in'}: return False
-    if suffix == 'cm':
-        return int(prefix) in range(150,194)
-    if suffix == 'in':
-        return int(prefix) in range(59,77)
-
-def validateHcl(x):
-    if x[0] != '#': return False
-    if len(x) != 7: return False
-    x = x[1:len(x):]
-    validChars = set('0123456789abcdef')
-    return all((c in validChars) for c in x)
 
 
 passports = []

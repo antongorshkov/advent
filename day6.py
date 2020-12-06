@@ -8,11 +8,9 @@ def pt1():
 
 def pt2():
     total = 0
-    allLines = []
-    for gInput in groupInputs:
-        lines = [line for line in gInput.split('\n') if line.strip() != '']
-        total += len(reduce(lambda x, y: set(x).intersection(set(y)), lines))
-        allLines.append(lines)
+    for line in groupInputs:
+        lines = [set(line) for line in line.strip().split("\n")]
+        total += len(reduce(lambda x, y: x & y, lines))
     print total
 pt1()
 pt2()
